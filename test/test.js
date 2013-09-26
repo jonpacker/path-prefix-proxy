@@ -17,12 +17,13 @@ describe('path prefix proxy', function() {
   after(function(done) {
     server.close(done);
   });
-  function mkurl(path) {
+  function mkurl(path,query) {
     return url.format({
       hostname: 'localhost',
       port: server.address().port,
       pathname: path || '',
-      protocol: 'http'
+      protocol: 'http',
+      query: query 
     });
   };
 
@@ -38,5 +39,37 @@ describe('path prefix proxy', function() {
     });
   });
 
-  
+  it('should preserve the original path on the request', function(done) {
+    app.get('/path', function(req, res) {
+      assert(req.url == '/path')
+      res.end();
+    });
+    request(mkurl('/proxy/path'), function(err) {
+      assert(!err);
+      done();
+    });
+  });
+
+  it('should preserve the original path on the request with repeated prefix', function(done) {
+    app.get('/proxy/path/proxy', function(req, res) {
+      assert(req.url == '/proxy/path/proxy')
+      res.end();
+    });
+    request(mkurl('/proxy/proxy/path/proxy'), function(err) {
+      assert(!err);
+      done();
+    });
+  });
+
+  it('should preserve any query values', function(done) {
+    app.get('/path', function(req, res) {
+      assert(req.url == '/path?proxy=true')
+      res.end();
+    });
+    request(mkurl('/proxy/path', 'proxy=true'), function(err) {
+      assert(!err);
+      done();
+    });
+  });
+
 });
