@@ -20,6 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "express": "~3.4.0",
-    "mocha": "~1.13.0"
+    "mocha": "~1.13.0",
+    "request": "~2.27.0"
   }
 }

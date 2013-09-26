@@ -7,20 +7,21 @@ var url = require('url');
 
 describe('path prefix proxy', function() {
   var server;
+  var app;
   before(function(done) {
-    var app = express();
+    app = express();
     app.use('/proxy', ppp('/proxy'));
-    server = http.createServer(server);
+    server = http.createServer(app);
     server.listen(0, done);
   });
   after(function(done) {
     server.close(done);
   });
-  function url(path) {
+  function mkurl(path) {
     return url.format({
-      hostname: server.address().address,
+      hostname: 'localhost',
       port: server.address().port,
-      path: path || ''
+      pathname: path || '',
       protocol: 'http'
     });
   };
@@ -29,8 +30,9 @@ describe('path prefix proxy', function() {
     var gotReq = false;
     app.get('/path', function(req, res) {
       gotReq = true;
+      res.end();
     });
-    request(url('/proxy/path'), function(err) {
+    request(mkurl('/proxy/path'), function(err) {
       assert(gotReq);
       done();
     });
