@@ -1,4 +1,47 @@
 path-prefix-proxy
 =================
 
-add a path prefix to all of your express routes by simply proxying to them
+`path-prefix-proxy` is an express middlewhere which makes it easy to add a prefix
+path your existing express app.
+
+The most common use case for this is when you have different services running on
+different express servers, but you have something like nginx proxying all of 
+these services to a single hostname.
+
+For example, say you have an app that currently has the routes
+
+```
+GET /login
+POST /login
+GET /logout
+```
+
+But you've realised you want to share the host with some other services. So you'd
+like to prefix all of these paths with `/auth`, going to:
+
+```
+GET /auth/login
+POST /auth/login
+GET /auth/logout
+```
+
+And what if you need these to be configurable? What if you have static resources 
+that you want to be nested under `/auth` as well? `path-prefix-proxy` to the
+rescue!
+
+## Usage
+
+Just add this middleware to your express app like so:
+
+```javascript
+var pathPrefix = '/auth';
+app.use(pathPrefix, require('path-prefix-proxy')(pathPrefix));
+```
+
+and immediately your old routes will begin working in their new locations too!
+
+## Install
+
+```
+npm install path-prefix-proxy
+```
