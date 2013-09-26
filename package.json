@@ -1,0 +1,25 @@
+{
+  "name": "path-prefix-proxy",
+  "version": "0.1.0",
+  "description": "add a path prefix to all of your express routes by simply proxying to them",
+  "main": "ppp.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/brikteknologier/path-prefix-proxy"
+  },
+  "keywords": [
+    "path",
+    "prefix",
+    "proxy",
+    "express"
+  ],
+  "author": "Jon Packer",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "~3.4.0",
+    "mocha": "~1.13.0"
+  }
+}
