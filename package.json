@@ -1,6 +1,6 @@
 {
   "name": "path-prefix-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "add a path prefix to all of your express routes by simply proxying to them",
   "main": "ppp.js",
   "scripts": {
