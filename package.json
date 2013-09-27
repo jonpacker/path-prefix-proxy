@@ -22,5 +22,8 @@
     "express": "~3.4.0",
     "mocha": "~1.13.0",
     "request": "~2.27.0"
+  },
+  "dependencies": {
+    "normalize-pathname": "~1.0.1"
   }
 }
