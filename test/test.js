@@ -68,7 +68,7 @@ describe('path prefix proxy', function() {
       assert(req.url == '/path?proxy=true')
       res.end();
     });
-    request(mkurl('/proxy/path', 'proxy=true'), function(err) {
+    request(mkurl('/proxy/path', {proxy:true}), function(err) {
       assert(!err);
       done();
     });
