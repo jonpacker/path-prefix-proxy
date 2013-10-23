@@ -10,7 +10,7 @@ describe('path prefix proxy', function() {
   var app;
   before(function(done) {
     app = express();
-    app.use('/proxy', ppp('/proxy'));
+    app.use('/proxy', ppp('/proxy', true));
     server = http.createServer(app);
     server.listen(0, done);
   });
@@ -69,6 +69,12 @@ describe('path prefix proxy', function() {
     request(mkurl('/proxy/path', 'proxy=true'), function(err) {
       assert(!err);
       done();
+    });
+  });
+
+  it('should deny access to old routes if specified', function(done) {
+    request(mkurl('/path'), function(err, res) {
+      assert.equal(res.statusCode, 403);
     });
   });
 
