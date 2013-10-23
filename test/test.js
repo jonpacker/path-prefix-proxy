@@ -8,13 +8,15 @@ var url = require('url');
 describe('path prefix proxy', function() {
   var server;
   var app;
-  before(function(done) {
+  var proxy;
+  beforeEach(function(done) {
     app = express();
-    app.use('/proxy', ppp('/proxy', true));
+    proxy = ppp('/proxy');
+    app.use('/proxy', proxy);
     server = http.createServer(app);
     server.listen(0, done);
   });
-  after(function(done) {
+  afterEach(function(done) {
     server.close(done);
   });
   function mkurl(path,query) {
