@@ -45,3 +45,24 @@ and immediately your old routes will begin working in their new locations too!
 ```
 npm install path-prefix-proxy
 ```
+
+## Deny access to original paths
+
+So now we have everything under `/auth` being proxied to our base routes.
+But the base routes are still accessible - so going to `/auth/login` and 
+`/login` will yield identical results. What if we don't want this? PPP gives
+you an easy way to do this:
+
+```javascript
+var proxy = require('path-prefix-proxy')('/auth');
+app.use('/auth', proxy);
+app.use(proxy.denyUnproxied);
+```
+
+Now, `/auth/login` would be successful, but `/login` would not:
+
+```
+GET /auth/login -> 200
+GET /login      -> 403
+```
+
