@@ -75,8 +75,13 @@ describe('path prefix proxy', function() {
   });
 
   it('should deny access to old routes if specified', function(done) {
+    app.use(proxy.denyUnproxied);
+    app.get('/path', function(req, res) {
+      res.send(200);
+    });
     request(mkurl('/path'), function(err, res) {
       assert.equal(res.statusCode, 403);
+      done();
     });
   });
 
